@@ -1,16 +1,21 @@
 import program from 'commander';
+
 import {
   createInterface
 } from 'readline';
+
 import {
   createReadStream
 } from 'fs';
+
 import {
   basename
 } from 'path';
+
 import {
   version
 } from './package.json';
+
 import Decryption from './lib';
 
 const decrypt = input =>
@@ -52,6 +57,10 @@ program
 const {
   args: files
 } = program;
+
+if (files.length < 1) {
+  program.help();
+}
 
 const start = Date.now();
 

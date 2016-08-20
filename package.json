@@ -1,6 +1,6 @@
 {
   "name": "securecrt-password-decrypt",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Exactly as the title says.",
   "main": "./lib/index.js",
   "scripts": {
@@ -17,7 +17,8 @@
   "engines": {
     "node": ">=6.2.0"
   },
-  "bin": "./cli.js",
+  "preferGlobal": true,
+  "bin": "./securecrt-password-decrypt.js",
   "author": "OpenGG",
   "license": "GPL-3.0",
   "bugs": {
