@@ -1,6 +1,6 @@
 {
   "name": "securecrt-password-decrypt",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Exactly as the title says.",
   "main": "./lib/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/OpenGG/SecureCRT-password-decrypt.git"
+    "url": "git+https://github.com/OpenGG/securecrt-password-decrypt.git"
   },
   "keywords": [
     "SecureCRT",
@@ -22,9 +22,9 @@
   "author": "OpenGG",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/OpenGG/SecureCRT-password-decrypt/issues"
+    "url": "https://github.com/OpenGG/securecrt-password-decrypt/issues"
   },
-  "homepage": "https://github.com/OpenGG/SecureCRT-password-decrypt#readme",
+  "homepage": "https://github.com/OpenGG/securecrt-password-decrypt#readme",
   "dependencies": {
     "babel-core": "^6.13.2",
     "babel-polyfill": "^6.13.0",

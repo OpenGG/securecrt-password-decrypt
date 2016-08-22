@@ -1,4 +1,4 @@
-# SecureCRT-password-decrypt
+# securecrt-password-decrypt
 Exactly as the title says.
 
 ## usage
@@ -7,13 +7,14 @@ Exactly as the title says.
 
     Decrypts securecrt session files, which can be found inside:
 
-        %appdata%/VanDyke/Config/Sessions
+            %appdata%/VanDyke/Config/Sessions
 
     Options:
 
-      -h, --help               output usage information
-      -V, --version            output the version number
-      -f, --format [url|json]  specify the log format string
+        -h, --help               output usage information
+        -V, --version            output the version number
+        -f, --format [url|json]  set output format, default: url
+        -d, --delimiter [char]   set output delimiter, default: space
 
 
 ## Babel

@@ -16,11 +16,33 @@ import {
   version
 } from './package.json';
 
-import Decryption from './lib';
+import DecryptionFactory from './lib';
+
+program
+  .version(version)
+  .description('Decrypts securecrt session files, which can be found inside:\n\n\t%appdata%/VanDyke/Config/Sessions')
+  .usage('[options] <file ...>')
+  .option('-f, --format [url|json]', 'set output format, default: url', 'url')
+  .option('-d, --delimiter [char]', 'set output delimiter, default: space', ' ')
+  .parse(process.argv);
+
+const {
+  args: files,
+  format,
+  delimiter,
+} = program;
+
+if (files.length < 1) {
+  program.help();
+}
+
+const start = Date.now();
+
+const Decryption = DecryptionFactory();
 
 const decrypt = input =>
   new Promise((resolve, reject) => {
-    const decrypt = new Decryption();
+    const decryption = new Decryption();
 
     input.once('readable', () => {
 
@@ -35,45 +57,58 @@ const decrypt = input =>
       });
 
       lineReader.on('line', line => {
-        decrypt.update(line);
+        decryption.update(line);
       });
 
       input.on('end', () => {
         resolve(
-          decrypt.getResult()
+          decryption.getResult()
         );
       });
 
     });
   });
 
-program
-  .version(version)
-  .description('Decrypts securecrt session files, which can be found inside:\n\n\t%appdata%/VanDyke/Config/Sessions')
-  .usage('[options] <file ...>')
-  .option('-f, --format [url|json]', 'specify the log format string', 'url')
-  .parse(process.argv);
-
-const {
-  args: files
-} = program;
-
-if (files.length < 1) {
-  program.help();
+const enc = (strings, ...values) => {
+  let output = strings[0];
+  const {
+    length
+  } = values;
+  for (let i = 0; i < length; ++i) {
+    output += encodeURIComponent(values[i]);
+    output += strings[i + 1];
+  }
+  return output;
 }
 
-const start = Date.now();
+const {
+  length
+} = files;
 
-(async () => {
-  for (let file of files) {
-    const input = createReadStream(file);
-    const result = await decrypt(input);
+(async() => {
 
-    input.close();
+  const promises = files.map(
+    filePath => (async() => {
+      const input = createReadStream(filePath);
+      const result = await decrypt(input);
 
-    const name = basename(file);
+      input.close();
 
-    if (program.format === 'url') {
+      return result;
+    })()
+  );
+
+  const results = await Promise.all(promises);
+
+  for (let i = 0; i < length; ++i) {
+    const filePath = files[i];
+    const result = results[i];
+
+    const name = basename(filePath);
+
+    let output;
+
+    if (format === 'url') {
       const {
         "protocol name": protocol,
         hostname,
@@ -82,20 +117,13 @@ const start = Date.now();
         password,
       } = result;
 
-      const enc = (strings, ...values) => {
-        let output = strings[0];
-        const { length } = values;
-        for (let i = 0; i < length; ++i) {
-          output += encodeURIComponent(values[i]);
-          output += strings[i + 1];
-        }
-        return output;
-      }
 
-      console.log(name, enc`${protocol}://${username}:${password}@${hostname}:${port}`);
+      output = enc `${protocol}://${username}:${password}@${hostname}:${port}`;
     } else {
-      console.log(name, JSON.stringify(result));
+      output = JSON.stringify(result);
     }
+
+    console.log(`${name}${delimiter}${output}`);
   }
 })().catch(err => {
   console.error(err);
