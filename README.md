@@ -16,12 +16,6 @@ Exactly as the title says.
         -f, --format [url|json]  set output format, default: url
         -d, --delimiter [char]   set output delimiter, default: space
 
-
-## Babel
-
-This lib is written in ES6, with stage-0 syntax. Currently babel-register
-is a must.
-
 ## Credits
 
 The decryption algorithm is taken from `SecureCRT-decryptpass.py` (author

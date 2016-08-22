@@ -1,8 +1,8 @@
 {
   "name": "securecrt-password-decrypt",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Exactly as the title says.",
-  "main": "./lib/index.js",
+  "main": "./dist/lib/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -26,12 +26,14 @@
   },
   "homepage": "https://github.com/OpenGG/securecrt-password-decrypt#readme",
   "dependencies": {
+    "commander": "^2.9.0"
+  },
+  "devDependencies": {
     "babel-core": "^6.13.2",
-    "babel-polyfill": "^6.13.0",
-    "babel-preset-es2015": "^6.13.2",
-    "babel-preset-es2016": "^6.11.3",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.11.5",
     "babel-preset-stage-0": "^6.5.0",
     "babel-register": "^6.11.6",
-    "commander": "^2.9.0"
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2"
   }
 }

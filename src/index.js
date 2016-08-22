@@ -14,7 +14,7 @@ import {
 
 import {
   version
-} from './package.json';
+} from '../package.json';
 
 import DecryptionFactory from './lib';
 
